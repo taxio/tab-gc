@@ -1,7 +1,7 @@
 {
   "name": "Tab GC",
   "version": "1.0",
-  "description": "clean up tabs no use",
+  "description": "clean up your tabs.",
   "permissions": ["tabs"],
   "background": {
     "scripts": ["background.js"],
