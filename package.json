@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "build": "webpack",
+    "prerelease-build": "yarn build",
+    "release-build": "zip -r extension.zip dist"
+  },
   "devDependencies": {
     "@types/chrome": "^0.0.107",
     "@types/webpack": "^4.41.12",
