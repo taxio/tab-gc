@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, MouseEvent } from 'react';
 
 const KeyUrlPatterns: string = "url_patterns";
 
@@ -11,16 +11,22 @@ const Settings: React.FC = () => {
   const [urlPatterns, setUrlPatterns] = useState<Array<string>>([]);
   const [url, setUrl] = useState<string>('');
 
-  const addUrlPatterns = () => {
+  const addUrlPatterns = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     setUrlPatterns([...urlPatterns, url]);
     setUrl('');
   };
 
+  const deleteUrlPattern = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const pattern: string = e.currentTarget.value;
+    setUrlPatterns(urlPatterns.filter(pt => pt != pattern));
+  };
+
   useEffect(() => {
-    chrome.storage.sync.get(KeyUrlPatterns, (items) => {
-      console.log(items);
-      if (items.hasOwnProperty(KeyUrlPatterns)) {
-        setUrlPatterns(items[KeyUrlPatterns]);
+    chrome.storage.sync.get("url_patterns", (items) => {
+      if (items.hasOwnProperty("url_patterns")) {
+        setUrlPatterns(items["url_patterns"]);
       } else {
         setUrlPatterns(defaultUrlPatterns);
       }
@@ -28,14 +34,16 @@ const Settings: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log("useEffect: urlPatterns");
-    chrome.storage.sync.set({KeyUrlPatterns: urlPatterns});
+    chrome.storage.sync.set({"url_patterns": urlPatterns});
   }, [urlPatterns]);
 
   return (
     <div>
     { urlPatterns.map((pt: string, index: number) => (
-      <p key={index}>{pt}</p>
+      <div key={index}>
+        <button value={pt} onClick={deleteUrlPattern}>delete</button>
+        <p>{pt}</p>
+      </div>
     )) }
     <input type="text" value={url} onChange={e => setUrl(e.target.value)} />
     <button onClick={addUrlPatterns}>save</button>
