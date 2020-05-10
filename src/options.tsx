@@ -1,9 +1,11 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 
+import Settings from './components/Settings';
+
 ReactDom.render(
   <React.StrictMode>
-    <p>Options Page</p>
+    <Settings />
   </React.StrictMode>,
   document.getElementById('root'),
 );

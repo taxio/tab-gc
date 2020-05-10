@@ -2,7 +2,7 @@
   "name": "Tab GC",
   "version": "1.0",
   "description": "clean up your tabs.",
-  "permissions": ["tabs"],
+  "permissions": ["tabs", "storage"],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
