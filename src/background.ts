@@ -2,6 +2,7 @@ chrome.browserAction.onClicked.addListener((_) => {
   chrome.tabs.query({}, function(tabs: Array<chrome.tabs.Tab>){
     let tabIds: Array<number> = [];
     tabs.forEach((t: chrome.tabs.Tab) => {
+      console.log(t);
       if (isUrlToClose(t.url)) {
         if (t.id != null) {
           tabIds.push(t.id);
