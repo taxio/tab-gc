@@ -12,6 +12,8 @@ chrome.browserAction.onClicked.addListener((_) => {
   });
 });
 
+const targetHosts = ["www.google.com", "www.google.co.jp"];
+
 export const isUrlToClose = (url: string | undefined): boolean => {
   if (url == null) {
     return false;
@@ -19,8 +21,7 @@ export const isUrlToClose = (url: string | undefined): boolean => {
   if (url == "chrome://newtab/") {
     return true;
   }
-  if (url.indexOf("https://www.google.com/search") === 0) {
-    return true;
-  }
-  return false;
+  const urlParser = new URL(url);
+
+  return targetHosts.includes(urlParser.host) && urlParser.pathname === "/search";
 };
